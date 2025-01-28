@@ -5,6 +5,7 @@ from utils.api import Api
 def get_runic_words(input: str) -> set[str]:
     return set(input.split('\n')[0].strip().split(':')[1].strip().split(','))
 
+
 def part1(input: str) -> int:
     runic_words = get_runic_words(input)
     inscription = input.strip().split('\n')[-1]

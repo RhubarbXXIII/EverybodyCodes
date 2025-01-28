@@ -8,6 +8,7 @@ MONSTER_MAP = {
     'D': 5,
 }
 
+
 def part1(input: str) -> int:
     return input.count('B') + 3 * input.count('C')
 
