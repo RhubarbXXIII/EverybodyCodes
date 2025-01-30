@@ -1,5 +1,6 @@
 from utils.api import Api
 
+
 def get_heights(input: str) -> list[int]:
     return [int(height) for height in input.strip().split('\n')]
 

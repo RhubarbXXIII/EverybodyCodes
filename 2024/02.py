@@ -2,6 +2,7 @@ import re
 
 from utils.api import Api
 
+
 def get_runic_words(input: str) -> set[str]:
     return set(input.split('\n')[0].strip().split(':')[1].strip().split(','))
 
@@ -24,7 +25,7 @@ def part2(input: str) -> int:
 
         for runic_word in runic_words:
             for runic_word_index in (
-                match.start() for match in re.finditer(f"(?=({runic_word}))", inscription)
+                    match.start() for match in re.finditer(f"(?=({runic_word}))", inscription)
             ):
                 runic_symbol_indices = runic_symbol_indices.union(
                     range(runic_word_index, runic_word_index + len(runic_word))
