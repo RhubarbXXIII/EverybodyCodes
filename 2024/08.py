@@ -14,8 +14,6 @@ def part1(input: str) -> str:
 
         remaining_block_count -= necessary_block_count
 
-    return str(0)
-
 
 def part2(input: str) -> str:
     priest_count = int(input)
@@ -35,8 +33,6 @@ def part2(input: str) -> str:
             return str(width * (necessary_block_count - remaining_block_count))
 
         remaining_block_count -= necessary_block_count
-
-    return "0"
 
 
 def part3(input: str) -> str:
