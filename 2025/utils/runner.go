@@ -44,7 +44,7 @@ func Run(
 	runPart := func(part string, solve func(string) string) {
 		key, ok := aesKeys[fmt.Sprintf("key%s", part)]
 		if !ok {
-			log.Printf("Input not yet available for Part %s", part)
+			fmt.Printf("Input not yet available for Part %s\n", part)
 			return
 		}
 
@@ -52,11 +52,11 @@ func Run(
 
 		answer := solve(decryptedInput)
 		if answer == "" {
-			log.Printf("No answer for Part %s", part)
+			fmt.Printf("No answer for Part %s\n", part)
 			return
 		}
 
-		log.Printf("Part %s Answer: %s\n", part, answer)
+		fmt.Printf("Part %s Answer: %s\n", part, answer)
 
 		if !submit {
 			return
@@ -194,32 +194,6 @@ func fetchAesKeys(eventID, questID, sessionCookie string) map[string]string {
 	return responseData
 }
 
-// Decrypt all encrypted base64 inputs using the given AES keys.
-func decryptInputs(encryptedInputs map[string]string, keys map[string]string) map[string]string {
-	decryptedInputs := make(map[string]string)
-
-	for part, encryptedInputHex := range encryptedInputs {
-		keyString, ok := keys[fmt.Sprintf("key%s", part)]
-		if !ok || encryptedInputHex == "" {
-			log.Printf("Input not yet available for Part %s", part)
-			decryptedInputs[part] = ""
-			continue
-		}
-
-		keyBytes := []byte(keyString)
-
-		encryptedInputBytes, err := hex.DecodeString(encryptedInputHex)
-		if err != nil {
-			log.Fatalf("Failed to decode encrypted input bytes for part %s: %v", part, err)
-		}
-
-		decryptedInputBytes := decryptBytesAes(encryptedInputBytes, keyBytes)
-		decryptedInputs[part] = string(decryptedInputBytes)
-	}
-
-	return decryptedInputs
-}
-
 // Decrypt an encrypted hex input using the given AES key.
 func decryptInput(encryptedInput, key string) string {
 	keyBytes := []byte(key)
@@ -245,10 +219,9 @@ func decryptBytesAes(data, key []byte) []byte {
 		log.Fatalf("Failed to create a cipher block for key %s: %v", key, err)
 	}
 
-	iv := data[:aes.BlockSize]
-	data = data[aes.BlockSize:]
-
+	iv := key[:aes.BlockSize]
 	mode := cipher.NewCBCDecrypter(block, iv)
+
 	mode.CryptBlocks(data, data)
 
 	byteCount := len(data)
@@ -301,9 +274,20 @@ func submitAnswer(eventID, questID, part, answer, sessionCookie string) {
 
 	switch response.StatusCode {
 	case 200:
-		log.Printf("Submitted correct answer for part %s!", part)
+		var data map[string]any
+		if err := json.Unmarshal(responseBody, &data); err != nil {
+			log.Fatalf("Failed to decode JSON response for answer submission: %v\nResponse body: %s", err, string(responseBody))
+		}
+
+		if data["correct"].(bool) {
+			fmt.Printf("  Submitted correct answer for Part %s!\n", part)
+		} else {
+			log.Printf("  Submitted incorrect answer for Part %s, try again\n", part)
+		}
 	case 409:
-		log.Printf("Already submitted a correct answer for part %s", part)
+		fmt.Printf("  Already submitted a correct answer for Part %s\n", part)
+	case 423:
+		log.Printf("  Submitted answer too recently, try again after one minute\n")
 	default:
 		log.Fatalf("Failed to submit answer with status %d: %s", response.StatusCode, string(responseBody))
 	}
