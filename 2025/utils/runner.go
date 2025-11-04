@@ -11,7 +11,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"regexp"
 	"runtime"
 	"strconv"
@@ -72,7 +71,7 @@ func Run(
 
 // Parse quest ID from caller file path.
 func parseQuestId(callerFilePath string) string {
-	matches := regexp.MustCompile(`quest(\d{2})`).FindStringSubmatch(filepath.Base(callerFilePath))
+	matches := regexp.MustCompile(`quest(\d{2})`).FindStringSubmatch(callerFilePath)
 	if len(matches) != 2 {
 		log.Fatalf("Failed to find quest ID in calling file path: %s", callerFilePath)
 	}
