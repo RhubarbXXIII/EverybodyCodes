@@ -33,7 +33,6 @@ func solvePart2(input string) string {
 		turnCount++
 	}
 
-	// return strconv.FormatInt(turnCount, 10)
 	return strconv.Itoa(turnCount)
 }
 
