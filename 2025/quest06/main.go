@@ -50,13 +50,11 @@ func solvePart3(input string) string {
 	distanceLimit := 1000
 	patternRepetitionCount := 1000
 
-	// input = "AABCBABCABCabcabcABCCBAACBCa"
-
 	pattern := []rune(input)
 	patternLength := len(pattern)
 	patternLengthActual := patternRepetitionCount * patternLength
 
-	cache := map[rune]map[int]int{'a': map[int]int{}, 'b': map[int]int{}, 'c': map[int]int{}}
+	cache := map[rune]map[int]int{'a': {}, 'b': {}, 'c': {}}
 
 	totalPairingCount := 0
 
