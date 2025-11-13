@@ -9,18 +9,6 @@ import (
 	"everybodycodes/utils"
 )
 
-// func parseInput(input string) []int {
-// 	nailStrings := strings.Split(input, ",")
-// 	nails := make([]int, len(nailStrings))
-// 	for i, nail := range nailStrings {
-// 		nail[i], _ := strconv.Atoi()
-// 	}
-
-// 	names = strings.Split(inputLines[0], ",")
-// 	commands = strings.Split(inputLines[2], ",")
-// 	return
-// }
-
 func solvePart1(input string) string {
 	nails, _ := utils.ParseInts(strings.Split(input, ","))
 	nailCount := 32
@@ -68,7 +56,6 @@ func solvePart2(input string) string {
 }
 
 func solvePart3(input string) string {
-	// input = "1,5,2,6,8,4,1,7,3,6"
 	nails, _ := utils.ParseInts(strings.Split(input, ","))
 	nailCount := 256
 
