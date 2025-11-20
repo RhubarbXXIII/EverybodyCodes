@@ -128,21 +128,21 @@ func (grid *Grid) SetPosition(position Position, value rune) {
 	grid.Set(position.row, position.column, value)
 }
 
-func (grid *Grid) Rows() iter.Seq[[]rune] {
-	return func(yield func([]rune) bool) {
-		for _, row := range grid.cells {
-			if !yield(row) {
+func (grid *Grid) Rows() iter.Seq2[int, []rune] {
+	return func(yield func(int, []rune) bool) {
+		for r, row := range grid.cells {
+			if !yield(r, row) {
 				return
 			}
 		}
 	}
 }
 
-func (grid *Grid) Cells() iter.Seq[rune] {
-	return func(yield func(rune) bool) {
-		for _, row := range grid.cells {
-			for _, cell := range row {
-				if !yield(cell) {
+func (grid *Grid) Cells() iter.Seq2[Position, rune] {
+	return func(yield func(Position, rune) bool) {
+		for r, row := range grid.cells {
+			for c, cell := range row {
+				if !yield(Position{r, c}, cell) {
 					return
 				}
 			}
