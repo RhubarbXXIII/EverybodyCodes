@@ -86,6 +86,19 @@ func NewGrid(values [][]rune) Grid {
 	return Grid{cells}
 }
 
+func (grid *Grid) Clone() *Grid {
+	clone := Grid{}
+	clone.cells = make([][]rune, len(grid.cells))
+
+	for i, row := range grid.cells {
+		clone.cells[i] = make([]rune, len(row))
+
+		copy(clone.cells[i], row)
+	}
+
+	return &clone
+}
+
 func (grid *Grid) RowCount() int {
 	return len(grid.cells)
 }
@@ -128,9 +141,23 @@ func (grid *Grid) SetPosition(position Position, value rune) {
 	grid.Set(position.row, position.column, value)
 }
 
+func (grid *Grid) RowAt(row int) []rune {
+	return []rune(string(grid.cells[row]))
+}
+
 func (grid *Grid) Rows() iter.Seq2[int, []rune] {
 	return func(yield func(int, []rune) bool) {
 		for r, row := range grid.cells {
+			if !yield(r, row) {
+				return
+			}
+		}
+	}
+}
+
+func (grid *Grid) RowsFrom(startRow, endRow int) iter.Seq2[int, []rune] {
+	return func(yield func(int, []rune) bool) {
+		for r, row := range grid.cells[startRow:endRow] {
 			if !yield(r, row) {
 				return
 			}
