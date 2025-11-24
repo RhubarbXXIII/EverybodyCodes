@@ -92,34 +92,6 @@ func solvePart3(input string) string {
 	columns, _ := utils.ParseInts(strings.Split(input, "\n"))
 
 	roundCount := 0
-	// for {
-	// 	equal := true
-	// 	for i := range len(columns) {
-	// 		if columns[0] != columns[i] {
-	// 			equal = false
-	// 		}
-	// 	}
-
-	// 	if equal {
-	// 		break
-	// 	}
-
-	// 	minimumDifference := math.MaxInt64
-
-	// 	for i := range len(columns) - 1 {
-	// 		difference := columns[i+1] - columns[i]
-	// 		if difference > 0 {
-	// 			minimumDifference = min(minimumDifference, columns[i+1]-columns[i])
-	// 		}
-	// 	}
-
-	// 	for i := range len(columns) - 1 {
-	// 		columns[i] += minimumDifference
-	// 		columns[i+1] -= minimumDifference
-	// 	}
-
-	// 	roundCount += minimumDifference
-	// }
 
 	birdCount := 0
 	for _, birdColumnCount := range columns {

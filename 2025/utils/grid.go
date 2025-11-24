@@ -28,6 +28,14 @@ func (direction Direction) Vertical() int {
 	return direction.vertical
 }
 
+func (direction Direction) IsHorizontal() bool {
+	return direction.vertical == 0
+}
+
+func (direction Direction) IsVertical() bool {
+	return direction.horizontal == 0
+}
+
 func (direction Direction) Negate() Direction {
 	return Direction{-direction.vertical, -direction.horizontal}
 }
@@ -66,6 +74,24 @@ func (position Position) Add(direction Direction) Position {
 
 func (position Position) Subtract(direction Direction) Position {
 	return position.Add(direction.Negate())
+}
+
+func (position Position) DistanceTo(other Position) int {
+	distance := 0
+
+	if position.row < other.row {
+		distance += other.row - position.row
+	} else {
+		distance += position.row - other.row
+	}
+
+	if position.column < other.column {
+		distance += other.column - position.column
+	} else {
+		distance += position.column - other.column
+	}
+
+	return distance
 }
 
 type Grid struct {
