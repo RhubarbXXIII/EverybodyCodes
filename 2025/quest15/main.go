@@ -64,7 +64,6 @@ func solvePart2(input string) string {
 }
 
 func solvePart3(input string) string {
-	// input = `L6,L3,L6,R3,L6,L3,L3,R6,L6,R6,L6,L6,R3,L3,L3,R3,R3,L6,L6,L3`
 	instructions := strings.Split(input, ",")
 
 	var startPosition = utils.NewPosition(0, 0)
