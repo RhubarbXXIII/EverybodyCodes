@@ -127,7 +127,7 @@ func fetchSeed(sessionCookie string) string {
 
 // Fetch encrypted inputs for all available quest parts.
 func fetchEncryptedInputs(eventID, questID, seed, sessionCookie string) map[string]string {
-	url := fmt.Sprintf("https://everybody-codes.b-cdn.net/assets/%s/%s/input/%s.json", eventID, questID, seed)
+	url := fmt.Sprintf("https://everybody.codes/assets/%s/%s/input/%s.json", eventID, questID, seed)
 
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {

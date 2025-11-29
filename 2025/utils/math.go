@@ -1,5 +1,13 @@
 package utils
 
+func Abs(n int) int {
+	if n < 0 {
+		return -n
+	} else {
+		return n
+	}
+}
+
 func Gcd(a, b int) int {
 	for b != 0 {
 		a, b = b, a%b

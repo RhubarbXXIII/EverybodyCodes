@@ -8,18 +8,6 @@ import (
 	"everybodycodes/utils"
 )
 
-func buildWall(spell []int, length int) []int {
-	wall := make([]int, length)
-
-	for _, layer := range spell {
-		for i := layer - 1; i < len(wall); i += layer {
-			wall[i]++
-		}
-	}
-
-	return wall
-}
-
 func findSpell(wall []int) []int {
 	currentWall := make([]int, len(wall))
 	copy(currentWall, wall)
@@ -54,15 +42,6 @@ decreaseLoop:
 	}
 
 	return spell
-}
-
-func countBlocksInWall(wall []int) int {
-	blockCount := 0
-	for _, column := range wall {
-		blockCount += column
-	}
-
-	return blockCount
 }
 
 func countBlocksInSpell(spell []int, length int) int {
