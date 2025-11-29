@@ -11,18 +11,6 @@ import (
 	"everybodycodes/utils"
 )
 
-// func parseInput(input string) [][3]int {
-// 	inputLines := strings.Split(input, "\n")
-
-// 	segments := make([][3]int, len(inputLines))
-// 	for i := range inputLines {
-// 		segmentValues, _ := utils.ParseInts(strings.Split(inputLines[i], ","))
-// 		segments[i] = [3]int{segmentValues[0], segmentValues[1], segmentValues[2]}
-// 	}
-
-// 	return segments
-// }
-
 func parseInput(input string) map[int][][2]int {
 	inputLines := strings.Split(input, "\n")
 
